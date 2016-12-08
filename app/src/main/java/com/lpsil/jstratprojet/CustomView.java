@@ -10,13 +10,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnScrollChangeListener;
 import android.view.WindowManager;
 
 
+
 public class CustomView extends View implements View.OnTouchListener, View.OnClickListener{
+
 
 
     private Paint paint;
@@ -52,9 +57,19 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
     }
 
+    /*@Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // Compute the height required to render the view
+        // Assume Width will always be MATCH_PARENT.
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = 3000 + 50; // Since 3000 is bottom of last Rect to be drawn added and 50 for padding.
+        setMeasuredDimension(width, height);
+    }*/
+
     @Override
     protected void onDraw(Canvas canvas) {
         System.out.println("onDraw");
+
 
         bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
 
@@ -111,6 +126,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     }
 
 
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP)
@@ -138,6 +154,8 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     public void onClick(View v) {
         System.out.println("clic de base");
     }
+
+
 
     /*@Override
     public boolean onDrag(View v, DragEvent event) {
