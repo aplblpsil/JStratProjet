@@ -116,6 +116,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
 
             }System.out.println("");
+
         }
 
 

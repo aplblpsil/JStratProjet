@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.Gravity;
+import android.view.View;
 import android.widget.*;
 import android.view.ViewGroup.LayoutParams;
 import android.*;
@@ -26,7 +27,11 @@ public class Partie extends AppCompatActivity {
 
         ScrollView scrollView = new ScrollView(this);
         CustomView cv=new CustomView(this);
-        scrollView.addView(cv);
+
+        //scrollView.addView(cv);
+        View v =(View)cv;
+        //CustomView.OnFocusChangeListener(v);
+
 
 
 
@@ -34,7 +39,7 @@ public class Partie extends AppCompatActivity {
         setContentView(scrollView);
         //setContentView(cv);
 
-
+        cv.setFocusable(true);
 
 
 
