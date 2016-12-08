@@ -1,4 +1,4 @@
-package com.lpsil.jstratprojet;
+package com.lpsil.jstratprojet.classes;
 
 /**
  * Created by Léo on 07/12/2016.

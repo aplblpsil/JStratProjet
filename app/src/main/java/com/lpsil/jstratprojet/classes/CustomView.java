@@ -1,4 +1,4 @@
-package com.lpsil.jstratprojet;
+package com.lpsil.jstratprojet.classes;
 
 /**
  * Created by Léo on 13/10/2016.
@@ -10,14 +10,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnScrollChangeListener;
-import android.view.WindowManager;
 
+import com.lpsil.jstratprojet.R;
 
 
 public class CustomView extends View implements View.OnTouchListener, View.OnClickListener{

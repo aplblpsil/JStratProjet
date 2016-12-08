@@ -1,4 +1,4 @@
-package com.lpsil.jstratprojet;
+package com.lpsil.jstratprojet.classes;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

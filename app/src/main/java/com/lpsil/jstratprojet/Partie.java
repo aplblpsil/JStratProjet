@@ -1,13 +1,11 @@
 package com.lpsil.jstratprojet;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.view.Gravity;
 import android.widget.*;
-import android.view.ViewGroup.LayoutParams;
-import android.*;
+
+import com.lpsil.jstratprojet.classes.CustomView;
 
 
 public class Partie extends AppCompatActivity {

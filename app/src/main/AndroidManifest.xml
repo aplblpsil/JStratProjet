@@ -25,13 +25,14 @@
             android:name=".Partie"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_partie"
-            android:theme="@style/FullscreenTheme" />
-        <activity android:name=".Parti2" />
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
