@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private Button butDessin;
+    private Button butQuitter;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -116,10 +117,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     /**
-     *  Gère les évènements concernant les conrôles graphiques du menu
+     *  Gère les évènements concernant les contrôles graphiques du menu
      */
     private void init(){
         butDessin = (Button) findViewById(R.id.butJouer);
+        butQuitter = (Button) findViewById(R.id.butQuit);
         butDessin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +129,13 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        butQuitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     /**
