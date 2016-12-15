@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -28,6 +29,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     private float Yaffiche;
     private float Xmove;
     private float Ymove;
+    private Canvas terrain;
 
     float Xclic;
     float Yclic;
@@ -80,15 +82,17 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
         paint=new Paint();
         bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
+        terrain=canvas;
+        canvas.translate(Xaffiche,Yaffiche);
 
 
         for(int x = 0; x< plateau.getLongueur(); x++){
-            //canvas.drawLine(x*32,0,x*32,canvas.getHeight(),paint);
+
 
             for(int y = 0; y< plateau.getLargeur(); y++) {
 
                 if(plateau.getTabCase()[x][y].getIDImage()==1){
-                    //System.out.println("dessin herbe");
+
                     bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.herbe);
                     canvas.drawBitmap(bitmap, x * bitmap.getWidth(), y * bitmap.getHeight(), paint);
                 }
@@ -123,6 +127,11 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
     }
 
+    private void moveMap(){
+        //terrain.setMatrix(null);
+        terrain.translate(Xaffiche,Yaffiche);
+
+    }
 
 
     @Override
@@ -134,17 +143,24 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
             Xclic=event.getX();
             Yclic=event.getY();
+
+
             int indX=(int)(Xclic-Xaffiche)/bmpSize;
             int indY=(int)(Yclic-Yaffiche)/bmpSize;;
             System.out.println("clic en "+indX+" "+indY);
-            if(plateau.getTabCase()[indX][indY].getPerso()!=null){
-                plateau.setPersoActif(plateau.getTabCase()[indX][indY].getPerso());
-                System.out.println(plateau.getTabCase()[indX][indY].getPerso().getNom()+" actif en "+indX+" "+indY);
+            try {
+                if (plateau.getTabCase()[indX][indY].getPerso() != null) {
+                    plateau.setPersoActif(plateau.getTabCase()[indX][indY].getPerso());
+                    System.out.println(plateau.getTabCase()[indX][indY].getPerso().getNom() + " actif en " + indX + " " + indY);
+                }
+            }catch(Exception e){
+
             }
 
         }
         if(event.getAction()== MotionEvent.ACTION_UP){
             System.out.println("up");
+
         }
 
         if(event.getAction()== MotionEvent.ACTION_MOVE){
@@ -152,12 +168,17 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
 
 
+            //Rect r =terrain.getClipBounds();
             Xmove=event.getRawX();
             Ymove=event.getRawY();
             Xaffiche-=(Xclic-Xmove);
             Yaffiche-=(Yclic-Ymove);
+            //Xaffiche=r.left+Xmove;
+            //Yaffiche=r.top+Ymove;
+
             Xclic=Xmove;
             Yclic=Ymove;
+            //moveMap();
 
 
         }
