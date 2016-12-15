@@ -14,8 +14,8 @@ public class Carte {
                                             //1 herbe
 
     public Carte(){
-        setLongueur(20);
-        setLargeur(30);
+        setLongueur(30);
+        setLargeur(20);
         setGrilleObstacle(new boolean[getLongueur()][getLargeur()]);
         setGrilleDecor(new int[getLongueur()][getLargeur()]);
         setSpawnJoueur(new int[getLongueur()][getLargeur()]);

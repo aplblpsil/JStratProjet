@@ -28,16 +28,10 @@ public class Partie extends AppCompatActivity {
         ScrollView scrollView = new ScrollView(this);
         CustomView cv=new CustomView(this);
 
-        //scrollView.addView(cv);
+
         View v =(View)cv;
-        //CustomView.OnFocusChangeListener(v);
 
-
-
-
-        //scrollView.addView(cv);
-        setContentView(scrollView);
-        //setContentView(cv);
+        setContentView(cv);
 
         cv.setFocusable(true);
 

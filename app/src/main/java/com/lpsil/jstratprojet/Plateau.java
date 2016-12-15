@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Léo on 25/11/2016.
  */
 
-public class Plateau implements Runnable{
+public class Plateau {
     private int longueur;
     private int largeur;
     private Carte carte;
@@ -14,6 +14,9 @@ public class Plateau implements Runnable{
 
     private ArrayList<Personnage> equipe_1;
     private ArrayList<Personnage> equipe_2;
+
+    private Personnage persoActif;
+
 
     public Plateau(){
         this.setCarte(new Carte());
@@ -43,10 +46,12 @@ public class Plateau implements Runnable{
     public void initEquipe(){
         for(int i=0;i<3;i++){
             Personnage p = new Personnage();
+            p.setNom("équipe 1 joueur "+i);
             equipe_1.add(p);
         }
         for(int i=0;i<3;i++){
             Personnage p = new Personnage();
+            p.setNom("équipe 2 joueur "+i);
             equipe_2.add(p);
         }
     }
@@ -64,7 +69,7 @@ public class Plateau implements Runnable{
                     getTabCase()[x][y].setPerso(equipe_1.get(p1));
                     p1++;
                 }else if(getCarte().getSpawnJoueur()[x][y]==2){
-                    getTabCase()[x][y].setPerso(equipe_1.get(p2));
+                    getTabCase()[x][y].setPerso(equipe_2.get(p2));
                     p2++;
                 }
 
@@ -72,10 +77,7 @@ public class Plateau implements Runnable{
         }
     }
 
-    @Override
-    public void run() {
 
-    }
 
     public int getLongueur() {
         return longueur;
@@ -126,4 +128,11 @@ public class Plateau implements Runnable{
     }
 
 
+    public Personnage getPersoActif() {
+        return persoActif;
+    }
+
+    public void setPersoActif(Personnage persoActif) {
+        this.persoActif = persoActif;
+    }
 }

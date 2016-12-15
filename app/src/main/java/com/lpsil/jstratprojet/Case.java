@@ -7,7 +7,7 @@ package com.lpsil.jstratprojet;
 public class Case {
     private int X;
     private int Y;
-    private boolean accesible; //si cette case peur acceuillir un Perso
+    private boolean obstacle; //si cette case peur acceuillir un Perso
     private Personnage Perso;   //contien un personnage ou null
     private int IDImage;        //ID du décor sur la case
     private boolean deplacement;//si le perso focus peut atteinde cette case
@@ -16,16 +16,16 @@ public class Case {
     public Case(){
         setX(0);
         setY(0);
-        setAccesible(true);
+        setObstacle(false);
         setIDImage(0);
         setDeplacement(false);
         setDeplacement(false);
     }
 
-    public Case(int x, int y, int id ,boolean acces){
+    public Case(int x, int y, int id , boolean obs){
         setX(0);
         setY(0);
-        setAccesible(acces);
+        setObstacle(obs);
         setIDImage(id);
         setDeplacement(false);
         setDeplacement(false);
@@ -47,13 +47,6 @@ public class Case {
         Y = y;
     }
 
-    public boolean isAccesible() {
-        return accesible;
-    }
-
-    public void setAccesible(boolean accesible) {
-        this.accesible = accesible;
-    }
 
     public Personnage getPerso() {
         return Perso;
@@ -85,5 +78,13 @@ public class Case {
 
     public void setAttaque(boolean attaque) {
         this.attaque = attaque;
+    }
+
+    public boolean isObstacle() {
+        return obstacle;
+    }
+
+    public void setObstacle(boolean obstacle) {
+        this.obstacle = obstacle;
     }
 }
