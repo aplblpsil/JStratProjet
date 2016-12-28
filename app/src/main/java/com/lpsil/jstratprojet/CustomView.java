@@ -86,6 +86,8 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
         canvas.translate(Xaffiche,Yaffiche);
 
 
+
+
         for(int x = 0; x< plateau.getLongueur(); x++){
 
 
@@ -130,6 +132,10 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     private void moveMap(){
         //terrain.setMatrix(null);
         terrain.translate(Xaffiche,Yaffiche);
+        System.out.println("move :"+Xmove+" "+Ymove);
+        //terrain.translate(Xaffiche,Yaffiche);
+        this.setTranslationX(Xaffiche);
+        this.setTranslationY(Yaffiche);
 
     }
 
@@ -179,6 +185,15 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
             Xclic=Xmove;
             Yclic=Ymove;
             //moveMap();
+            Rect r =terrain.getClipBounds();
+            Xmove=event.getRawX();
+            Ymove=event.getRawY();
+            Xaffiche=r.left+(Xmove-Xclic);
+            Yaffiche=r.top+(Ymove-Yclic);
+
+            System.out.println("move de : "+(Xmove-Xclic)+" "+(Ymove-Yclic));
+
+            moveMap();
 
 
         }
@@ -190,6 +205,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     public void onClick(View v) {
 
         System.out.println("clic de base");
+
     }
 
 
