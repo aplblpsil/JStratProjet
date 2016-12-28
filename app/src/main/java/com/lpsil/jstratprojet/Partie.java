@@ -11,7 +11,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.*;
 
 
-public class Partie extends AppCompatActivity {
+public class Partie extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +35,10 @@ public class Partie extends AppCompatActivity {
 
         cv.setFocusable(true);
 
-
-
-
-
         System.out.println("Partie crée");
+
     }
+
+
+
 }
