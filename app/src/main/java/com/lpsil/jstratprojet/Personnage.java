@@ -8,6 +8,8 @@ public class Personnage {
     private String nom;
     private int pv;
     private int pm;
+    private int pvRestant;
+    private int pmRestant;
     private String image;
 
     public Personnage(){
@@ -15,7 +17,11 @@ public class Personnage {
         setPv(10);
         setPm(3);
         setImage("joueur1");
+        pmRestant=pm;
+        pvRestant=pv;
     }
+
+
 
     public String getNom() {
         return nom;

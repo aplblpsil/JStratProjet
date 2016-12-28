@@ -11,7 +11,10 @@ public class Case {
     private Personnage Perso;   //contien un personnage ou null
     private int IDImage;        //ID du décor sur la case
     private boolean deplacement;//si le perso focus peut atteinde cette case
+    private boolean chemin;     //case du chemin de deplacement
     private boolean attaque;    //si le perso focus peut attaquer cette case
+    private int cout;           //cout en pm du déplacement sur cette case
+    private Case suivant;       //case suivante si chainé
 
     public Case(){
         setX(0);
@@ -19,16 +22,28 @@ public class Case {
         setObstacle(false);
         setIDImage(0);
         setDeplacement(false);
-        setDeplacement(false);
+        setChemin(false);
+        setCout(0);
     }
 
     public Case(int x, int y, int id , boolean obs){
-        setX(0);
-        setY(0);
+        setX(x);
+        setY(y);
         setObstacle(obs);
         setIDImage(id);
         setDeplacement(false);
-        setDeplacement(false);
+        setChemin(false);
+        setCout(0);
+    }
+
+    public Case(Case c){
+        setX(c.getX());
+        setY(c.getY());
+        setObstacle(c.isObstacle());
+        setIDImage(c.getIDImage());
+        setDeplacement(c.isDeplacement());
+        setChemin(c.isChemin());
+        setCout(c.getCout());
     }
 
     public int getX() {
@@ -86,5 +101,29 @@ public class Case {
 
     public void setObstacle(boolean obstacle) {
         this.obstacle = obstacle;
+    }
+
+    public int getCout() {
+        return cout;
+    }
+
+    public void setCout(int cout) {
+        this.cout = cout;
+    }
+
+    public Case getSuivant() {
+        return suivant;
+    }
+
+    public void setSuivant(Case suivant) {
+        this.suivant = suivant;
+    }
+
+    public boolean isChemin() {
+        return chemin;
+    }
+
+    public void setChemin(boolean chemin) {
+        this.chemin = chemin;
     }
 }

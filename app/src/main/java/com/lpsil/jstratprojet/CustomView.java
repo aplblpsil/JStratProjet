@@ -15,8 +15,10 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
 
-public class CustomView extends View implements View.OnTouchListener, View.OnClickListener{
+
+public class CustomView extends View implements View.OnTouchListener, View.OnClickListener {
 
 
 
@@ -30,14 +32,25 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     private float Xmove;
     private float Ymove;
     private Canvas terrain;
+    private Tour tour;
+    private ArrayList<Bitmap> tabBitmap;
+
 
     float Xclic;
     float Yclic;
+    int indXc=0;
+    int indYc=0;
+    int indXm=0;
+    int indYm=0;
+
+
 
 
 
     public CustomView(Context context) {
         super(context);
+        tabBitmap=new ArrayList<Bitmap>();
+        initBitmap();
         bmpSize= BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1).getWidth();
         Xaffiche=0;
         Yaffiche=0;
@@ -57,16 +70,20 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
         android.view.ViewGroup.LayoutParams lp = new android.view.ViewGroup.LayoutParams(height,width);//100 is width and 200 is height
         this.setLayoutParams(lp);
         init();
+
+        //tour=new Tour(plateau);
+        //tour.start();
+        plateau.start();
         System.out.println("Custum view créé");
     }
 
     public void init(){
         this.isFocusable();
         this.isFocusableInTouchMode();
-        this.setOnClickListener(this);
+
 
         this.setOnTouchListener(this);
-
+        this.setOnClickListener(this);
 
         this.invalidate();
 
@@ -75,52 +92,85 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
     }
 
+    private void initBitmap(){
+        //Bitmap bit = new Bitmap();
+        /*Bitmap bit = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
+        tabBitmap.add(bit);
+        bit = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_bleu);
+        tabBitmap.add(bit);
+        bit =BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_vert);
+        tabBitmap.add(bit);
+        bit =BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection);
+        tabBitmap.add(bit);*/
+
+        tabBitmap.add(BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1));
+        tabBitmap.add(BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.herbe));
+        tabBitmap.add(BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_bleu));
+        tabBitmap.add(BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_vert));
+        tabBitmap.add(BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection));
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
 
 
         paint=new Paint();
-        bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
+        //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
         terrain=canvas;
-        canvas.translate(Xaffiche,Yaffiche);
+        //canvas.translate(Xaffiche,Yaffiche);
+
+        //Xaffiche=canvas.getClipBounds().left;
+        //Yaffiche=canvas.getClipBounds().top;
+
+        //System.out.println("position du canvas : "+Xaffiche+" "+Yaffiche);
+
+        //try {
+            for (int x = 0; x < plateau.getLongueur(); x++) {
 
 
+                for (int y = 0; y < plateau.getLargeur(); y++) {
 
+                    if (plateau.getTabCase()[x][y].getIDImage() == 1) {
 
-        for(int x = 0; x< plateau.getLongueur(); x++){
+                        //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.herbe);
 
+                        canvas.drawBitmap(tabBitmap.get(1), x * tabBitmap.get(1).getWidth(), y * tabBitmap.get(1).getHeight(), paint);
 
-            for(int y = 0; y< plateau.getLargeur(); y++) {
-
-                if(plateau.getTabCase()[x][y].getIDImage()==1){
-
-                    bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.herbe);
-                    canvas.drawBitmap(bitmap, x * bitmap.getWidth(), y * bitmap.getHeight(), paint);
-                }
-
-                if(!plateau.getTabCase()[x][y].isObstacle()){
-
-                    paint.setStyle(Paint.Style.STROKE);
-                    paint.setColor(Color.BLACK);
-                    canvas.drawRect(x*bmpSize,y*bmpSize,(x+1)*bmpSize,(y+1)*bmpSize,paint);
-                    paint=new Paint();
-                }
-
-
-
-                if(plateau.getTabCase()[x][y].getPerso()!=null){
-                    if(plateau.getTabCase()[x][y].getPerso()==plateau.getPersoActif()){
-                        bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection);
-                        canvas.drawBitmap(bitmap, x * bitmap.getWidth(), y * bitmap.getHeight(), paint);
                     }
-                    bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
-                    canvas.drawBitmap(bitmap, x * bitmap.getWidth(), y * bitmap.getHeight(), paint);
+
+                    if (!plateau.getTabCase()[x][y].isObstacle()) {
+
+                        paint.setStyle(Paint.Style.STROKE);
+                        paint.setColor(Color.BLACK);
+                        canvas.drawRect(x * bmpSize, y * bmpSize, (x + 1) * bmpSize, (y + 1) * bmpSize, paint);
+                        paint = new Paint();
+                    }
+
+                    if (plateau.getTabCase()[x][y].isDeplacement()) {
+                        //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_bleu);
+                        canvas.drawBitmap(tabBitmap.get(2), x * tabBitmap.get(2).getWidth(), y * tabBitmap.get(2).getHeight(), paint);
+                    }
+                    if (plateau.getTabCase()[x][y].isChemin()) {
+                        //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection_vert);
+                        canvas.drawBitmap(tabBitmap.get(3), x * tabBitmap.get(3).getWidth(), y * tabBitmap.get(3).getHeight(), paint);
+                    }
+
+                    if (plateau.getTabCase()[x][y].getPerso() != null) {
+                        if (plateau.getTabCase()[x][y].getPerso() == plateau.getPersoActif()) {
+                            //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.selection);
+                            canvas.drawBitmap(tabBitmap.get(4), x * tabBitmap.get(4).getWidth(), y * tabBitmap.get(4).getHeight(), paint);
+                        }
+                        //bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.joueur1);
+                        canvas.drawBitmap(tabBitmap.get(0), x * tabBitmap.get(0).getWidth(), y * tabBitmap.get(0).getHeight(), paint);
+                    }
+
                 }
 
             }
+            //}catch(Exception e){
 
-        }
+           // }
 
 
 
@@ -131,8 +181,8 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
     private void moveMap(){
         //terrain.setMatrix(null);
-        terrain.translate(Xaffiche,Yaffiche);
-        System.out.println("move :"+Xmove+" "+Ymove);
+        //terrain.translate(Xaffiche,Yaffiche);
+        //System.out.println("move :"+Xmove+" "+Ymove);
         //terrain.translate(Xaffiche,Yaffiche);
         this.setTranslationX(Xaffiche);
         this.setTranslationY(Yaffiche);
@@ -145,72 +195,100 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
 
         if(event.getAction()== MotionEvent.ACTION_DOWN){
-            System.out.println("down");
+
 
             Xclic=event.getX();
             Yclic=event.getY();
 
 
-            int indX=(int)(Xclic-Xaffiche)/bmpSize;
-            int indY=(int)(Yclic-Yaffiche)/bmpSize;;
-            System.out.println("clic en "+indX+" "+indY);
-            try {
-                if (plateau.getTabCase()[indX][indY].getPerso() != null) {
-                    plateau.setPersoActif(plateau.getTabCase()[indX][indY].getPerso());
-                    System.out.println(plateau.getTabCase()[indX][indY].getPerso().getNom() + " actif en " + indX + " " + indY);
-                }
-            }catch(Exception e){
 
-            }
+            //int indX=(int)(Xclic-Xaffiche)/bmpSize;
+            //int indY=(int)(Yclic-Yaffiche)/bmpSize;
+            indXc=(int)(Xclic)/bmpSize;
+            indYc=(int)(Yclic)/bmpSize;
+
+            //try {
+                if (plateau.getTabCase()[indXc][indYc].getPerso() != null) {
+                    plateau.setPersoActif(plateau.getTabCase()[indXc][indYc].getPerso());
+                    plateau.setCaseActive(plateau.getTabCase()[indXc][indYc]);
+                    plateau.initDeplacement();
+                    plateau.setModDeplacement(true);
+                    plateau.deplacementNormal(indXc, indYc, plateau.getPersoActif().getPm());
+                    plateau.getCaseActive().setDeplacement(false);
+                    System.out.println(plateau.getTabCase()[indXc][indYc].getPerso().getNom() + " actif en " + indXc + " " + indYc);
+                }
+            //}catch(Exception e){
+
+            //}
 
         }
         if(event.getAction()== MotionEvent.ACTION_UP){
-            System.out.println("up");
+            //System.out.println("up");
+
+            int indXm=(int)(event.getX())/bmpSize;
+            int indYm=(int)(event.getY())/bmpSize;
+
+            if (plateau.getTabCase()[indXm][indYm].isChemin()){
+                //inversion position du joueur
+                plateau.getTabCase()[indXm][indYm].setPerso(plateau.getPersoActif());
+                plateau.getCaseActive().setPerso(null);
+
+                plateau.setCaseActive(plateau.getTabCase()[indXm][indYm]);
+                plateau.initDeplacement();
+                plateau.deplacementNormal(indXm, indYm, plateau.getPersoActif().getPm());
+                plateau.initChemin();
+            }
+            plateau.setModDeplacement(false);
 
         }
 
         if(event.getAction()== MotionEvent.ACTION_MOVE){
-            System.out.println("move");
+            //System.out.println("move");
 
 
 
-            //Rect r =terrain.getClipBounds();
-            Xmove=event.getRawX();
-            Ymove=event.getRawY();
+
+
+            //Xmove=event.getRawX()-Xaffiche;
+            //Ymove=event.getRawY()-Yaffiche;
+
+            Xmove=event.getX();
+            Ymove=event.getY();
             Xaffiche-=(Xclic-Xmove);
             Yaffiche-=(Yclic-Ymove);
-            //Xaffiche=r.left+Xmove;
-            //Yaffiche=r.top+Ymove;
 
-            Xclic=Xmove;
-            Yclic=Ymove;
+
+
+
+
+            //System.out.println("move de : "+(Xmove-Xclic)+" "+(Ymove-Yclic));
+
             //moveMap();
-            Rect r =terrain.getClipBounds();
-            Xmove=event.getRawX();
-            Ymove=event.getRawY();
-            Xaffiche=r.left+(Xmove-Xclic);
-            Yaffiche=r.top+(Ymove-Yclic);
+            if((event.getX()/bmpSize)!=indXm||(event.getY()/bmpSize)!=indYm) {
+            //if(indXm<event.getX()){
+                plateau.initChemin();
+                indXm = (int) (Xmove) / bmpSize;
+                indYm = (int) (Ymove) / bmpSize;
 
-            System.out.println("move de : "+(Xmove-Xclic)+" "+(Ymove-Yclic));
+                if (plateau.getModDeplacement()) {
+                    System.out.println("move en : " + indXm + " " + indYm);
+                    Chemin.trouver(plateau.getCaseActive(), plateau.getTabCase()[indXm][indYm], plateau.getTabCase());
 
-            moveMap();
-
+                    //Chemin.transfert();
+                }else{
+                    moveMap();
+                }
+            }
 
         }
         this.invalidate();
         return false;
     }
 
+
     @Override
     public void onClick(View v) {
 
-        System.out.println("clic de base");
-
     }
-
-
-
-
-
 
 }

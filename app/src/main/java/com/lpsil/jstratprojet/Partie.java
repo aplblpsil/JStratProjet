@@ -36,7 +36,8 @@ public class Partie extends AppCompatActivity{
         cv.setFocusable(true);
 
         System.out.println("Partie crée");
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
 
