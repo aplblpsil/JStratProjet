@@ -7,114 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Chemin {
-    /*static ArrayList<Case> tabMaillon;
-    static ArrayList<Case> tabChemin;
 
-
-    public static void trouver(Case cD,Case cF,Case[][] tabCase){
-        Boolean trouvé=false;
-        tabMaillon = new ArrayList();
-        tabChemin = new ArrayList();
-
-        System.out.println("recherche de chemint");
-
-        for(int i=0; i<tabCase.length;i++){
-            for(int j=0; j<tabCase[0].length;j++){
-                tabCase[i][j].setSuivant(null);
-                tabCase[i][j].setCout(0);
-                tabCase[i][j].setChemin(false);
-            }
-        }
-        suivant(cD,-1,tabCase);
-
-        //remonterChemin(cF);
-
-
-    }
-    public static void suivant(Case c,int dir,Case[][] tabCase){
-        //System.out.println("Suivant en : "+c.getX()+" "+c.getY());
-        if(c.getX()+1<tabCase.length&&dir!=2){
-
-            //Case suiv=tabCase[c.getX()+1][c.getY()];
-            Case suiv = new Case(tabCase[c.getX()+1][c.getY()]);
-            suiv.setCout(suiv.getCout()+1);
-            suiv.setSuivant(c);
-
-            if(ajout(suiv)){
-                suivant(suiv,1,tabCase);
-            }
-        }
-        if(c.getX()-1>=0&&dir!=1){
-            Case suiv = new Case(tabCase[c.getX()-1][c.getY()]);
-            suiv.setCout(suiv.getCout()+1);
-            suiv.setSuivant(c);
-            if(ajout(suiv)){
-                suivant(suiv,2,tabCase);
-            }
-        }
-        if(c.getY()+1<tabCase[0].length&&dir!=4){
-            Case suiv = new Case(tabCase[c.getX()][c.getY()+1]);
-            suiv.setCout(suiv.getCout()+1);
-            suiv.setSuivant(c);
-            if(ajout(suiv)){
-                suivant(suiv,3,tabCase);
-            }
-        }
-        if(c.getY()-1>=0&&dir!=3){
-            Case suiv = new Case(tabCase[c.getX()][c.getY()-1]);
-            suiv.setCout(suiv.getCout()+1);
-            suiv.setSuivant(c);
-            if(ajout(suiv)){
-                suivant(suiv,4,tabCase);
-            }
-        }
-
-
-
-    }
-    public static boolean ajout(Case c){
-        boolean ajouté=false;
-        boolean exist=false;
-        for(int i=0;i<tabMaillon.size();i++){
-            Case temp = tabMaillon.get(i);
-            if(c.getX()==temp.getX()&&c.getY()==temp.getY()){
-            //if(c==temp){
-                exist=true;
-                if(c.getCout()<temp.getCout()){
-                    tabMaillon.remove(temp);
-                    tabMaillon.add(c);
-                    ajouté = true;
-
-                }
-            }
-        }
-        if(!exist&&!ajouté){
-            tabMaillon.add(c);
-            ajouté = true;
-        }
-
-
-        return ajouté;
-    }
-
-    public static void remonterChemin(Case c){
-
-        for(int i=0;i<tabMaillon.size();i++){
-
-            if(tabMaillon.get(i).getX()==c.getX()&&tabMaillon.get(i).getY()==c.getY()){
-                c=new Case(tabMaillon.get(i));
-            }
-        }
-        System.out.println("case chemin : "+c.getX()+" "+c.getY());
-
-        c.setChemin(true);
-        tabChemin.add(c);
-
-        if(c.getCout()>0&&c.getSuivant()!=null){
-            //System.out.println("case remonté cout : "+c.getCout());
-            remonterChemin(c.getSuivant());
-        }
-    }*/
     private static ArrayList tabMaillon;
     private static ArrayList tabChemin;
     private static Maillon maillon;
@@ -122,6 +15,7 @@ public class Chemin {
     private static Case tabCase[][];
     private static String[][] grille;
     private static boolean trouvé;
+    private static int cout;
 
     /*public Chemin(){
         tabMaillon = new ArrayList();
@@ -149,7 +43,8 @@ public class Chemin {
         trouvé=false;
     }*/
 
-    public static void trouver(Case cd,Case cf,Case[][] tab){
+
+    public static int trouver(Case cd,Case cf,Case[][] tab){
         trouvé=false;
 
         tabMaillon = new ArrayList();
@@ -169,6 +64,7 @@ public class Chemin {
             Maillon temp=(Maillon) tabMaillon.get(i);
             if(temp.getX()==cf.getX()&&temp.getY()==cf.getY()){
                 remonterChemin(temp);
+                cout=temp.getCout();
             }
             else{
 
@@ -178,6 +74,7 @@ public class Chemin {
             Maillon temp=(Maillon) tabChemin.get(i);
             tabCase[temp.getX()][temp.getY()].setChemin(true);
         }
+        return cout;
 
 
     }
@@ -237,7 +134,7 @@ public class Chemin {
 
     public static void remonterChemin(Maillon m){
         grille[m.getX()][m.getY()]="1";
-
+        System.out.println("remonter avec cout de : "+m.getCout());
         tabChemin.add(m);
         if(m.getCout()>0){
             remonterChemin(m.getPrec());

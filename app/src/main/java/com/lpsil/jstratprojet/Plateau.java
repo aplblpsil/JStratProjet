@@ -112,7 +112,7 @@ public class Plateau extends Thread{
         int y=Y;
 
 
-        int pmRestant=pm;
+
 
         if(pm>0){
             if(y+1<=carte.getLargeur()-1&&!tabCase[x][y].isObstacle()) {

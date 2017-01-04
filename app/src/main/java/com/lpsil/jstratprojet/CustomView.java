@@ -42,6 +42,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
     int indYc=0;
     int indXm=0;
     int indYm=0;
+    int coutDep=0;
 
 
 
@@ -213,7 +214,7 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
                     plateau.setCaseActive(plateau.getTabCase()[indXc][indYc]);
                     plateau.initDeplacement();
                     plateau.setModDeplacement(true);
-                    plateau.deplacementNormal(indXc, indYc, plateau.getPersoActif().getPm());
+                    plateau.deplacementNormal(indXc, indYc, plateau.getPersoActif().getPmRestant());
                     plateau.getCaseActive().setDeplacement(false);
                     System.out.println(plateau.getTabCase()[indXc][indYc].getPerso().getNom() + " actif en " + indXc + " " + indYc);
                 }
@@ -235,7 +236,9 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
 
                 plateau.setCaseActive(plateau.getTabCase()[indXm][indYm]);
                 plateau.initDeplacement();
-                plateau.deplacementNormal(indXm, indYm, plateau.getPersoActif().getPm());
+
+                plateau.getPersoActif().setPmRestant(plateau.getPersoActif().getPmRestant()-coutDep);
+                plateau.deplacementNormal(indXm, indYm, plateau.getPersoActif().getPmRestant());
                 plateau.initChemin();
             }
             plateau.setModDeplacement(false);
@@ -257,27 +260,31 @@ public class CustomView extends View implements View.OnTouchListener, View.OnCli
             Xaffiche-=(Xclic-Xmove);
             Yaffiche-=(Yclic-Ymove);
 
-
+            indXm = (int) (Xmove) / bmpSize;
+            indYm = (int) (Ymove) / bmpSize;
 
 
 
             //System.out.println("move de : "+(Xmove-Xclic)+" "+(Ymove-Yclic));
 
             //moveMap();
-            if((event.getX()/bmpSize)!=indXm||(event.getY()/bmpSize)!=indYm) {
+            //if((event.getX()/bmpSize)!=indXm||(event.getY()/bmpSize)!=indYm) {
+            if(Math.abs(indXc-indXm)>0||Math.abs(indYc-indYm)>0){
             //if(indXm<event.getX()){
                 plateau.initChemin();
-                indXm = (int) (Xmove) / bmpSize;
-                indYm = (int) (Ymove) / bmpSize;
+
 
                 if (plateau.getModDeplacement()) {
                     System.out.println("move en : " + indXm + " " + indYm);
-                    Chemin.trouver(plateau.getCaseActive(), plateau.getTabCase()[indXm][indYm], plateau.getTabCase());
+                    coutDep=Chemin.trouver(plateau.getCaseActive(), plateau.getTabCase()[indXm][indYm], plateau.getTabCase());
 
-                    //Chemin.transfert();
+                    //CheminThread thread = new CheminThread(plateau.getCaseActive(), plateau.getTabCase()[indXm][indYm], plateau.getTabCase());
+                    //thread.start();
                 }else{
                     moveMap();
                 }
+                indXc = (int) (Xmove) / bmpSize;
+                indYc = (int) (Ymove) / bmpSize;
             }
 
         }

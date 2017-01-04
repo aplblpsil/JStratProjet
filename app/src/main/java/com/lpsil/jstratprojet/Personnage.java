@@ -17,8 +17,8 @@ public class Personnage {
         setPv(10);
         setPm(3);
         setImage("joueur1");
-        pmRestant=pm;
-        pvRestant=pv;
+        setPmRestant(pm);
+        setPvRestant(pv);
     }
 
 
@@ -53,5 +53,21 @@ public class Personnage {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getPvRestant() {
+        return pvRestant;
+    }
+
+    public void setPvRestant(int pvRestant) {
+        this.pvRestant = pvRestant;
+    }
+
+    public int getPmRestant() {
+        return pmRestant;
+    }
+
+    public void setPmRestant(int pmRestant) {
+        this.pmRestant = pmRestant;
     }
 }
