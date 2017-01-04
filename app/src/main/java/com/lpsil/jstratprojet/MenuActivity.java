@@ -1,11 +1,13 @@
 package com.lpsil.jstratprojet;
 
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,8 @@ public class MenuActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
-    private Button butDessin;
+    private Button butJouer;
+    private Button butQuitter;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -116,17 +119,26 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     /**
-     *  Gère les évènements concernant les conrôles graphiques du menu
+     *  Gère les évènements concernant les contrôles graphiques du menu
      */
     private void init(){
-        butDessin = (Button) findViewById(R.id.butJouer);
-        butDessin.setOnClickListener(new View.OnClickListener() {
+        butJouer = (Button) findViewById(R.id.butJouer);
+        butQuitter = (Button) findViewById(R.id.butQuit);
+
+        butJouer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, Partie.class);
                 startActivity(intent);
             }
         });
+        butQuitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     /**
