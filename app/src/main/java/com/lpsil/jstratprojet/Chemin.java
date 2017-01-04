@@ -13,7 +13,7 @@ public class Chemin {
     private static Maillon maillon;
 
     private static Case tabCase[][];
-    private static String[][] grille;
+    private static Boolean[][] grille;
     private static boolean trouvé;
     private static int cout;
 
@@ -51,11 +51,11 @@ public class Chemin {
         tabChemin = new ArrayList();
         maillon = new Maillon(cd.getX(),cd.getY(),0,null);
         tabCase=tab;
-        grille= new String[tab.length][tab[0].length];
+        grille= new Boolean[tab.length][tab[0].length];
 
         for(int i=0; i<tabCase.length;i++){
             for(int j=0; j<tabCase[0].length;j++){
-                grille[i][j]="";
+                grille[i][j]=false;
                 //tabCase[i][j].setChemin(false);
             }
         }
@@ -133,7 +133,7 @@ public class Chemin {
     }
 
     public static void remonterChemin(Maillon m){
-        grille[m.getX()][m.getY()]="1";
+        grille[m.getX()][m.getY()]=true;
         System.out.println("remonter avec cout de : "+m.getCout());
         tabChemin.add(m);
         if(m.getCout()>0){
@@ -190,14 +190,14 @@ public class Chemin {
     /**
      * @return the grille
      */
-    public String[][] getGrille() {
+    public Boolean[][] getGrille() {
         return grille;
     }
 
     /**
      * @param grille the grille to set
      */
-    public void setGrille(String[][] grille) {
+    public void setGrille(Boolean[][] grille) {
         this.grille = grille;
     }
 
